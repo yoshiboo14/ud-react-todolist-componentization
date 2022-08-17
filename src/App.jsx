@@ -1,5 +1,11 @@
 import React, { useState } from "react";
 import "./styles.css";
+// InputTodoコンポーネントのインポート
+import { InputTodo } from "./components/InputTodo";
+//
+import { InCompleteTodo } from "./components/InCompleteTodo";
+//
+import { CompleteTodo } from "./components/CompleteTodo";
 
 export const App = () => {
   const [todoText, setTodoText] = useState("");
@@ -39,47 +45,20 @@ export const App = () => {
 
   return (
     <>
-      <div className="input-area">
-        <input
-          placeholder="TODOを入力"
-          value={todoText}
-          onChange={onChangeTodoText}
-        />
-        <button onClick={onClickadd}>追加</button>
-      </div>
-      <div className="incomplete-area">
-        <p className="title">未完了のTODO</p>
-        <ul>
-          {incompleteTodos.map((todo, index) => {
-            return (
-              <div key={todo} className="list-row">
-                <li>{todo}</li>
-                <button onClick={() => onClickComplete(index)}>完了</button>
-                <button onClick={() => onClickdelete(index)}>削除</button>
-              </div>
-            );
-          })}
-        </ul>
-      </div>
-      <div class="complete-area">
-        <p className="title">完了のTODO</p>
-        <ul>
-          {completeTodos.map((todo, index) => {
-            return (
-              <div key={todo} className="list-row">
-                <li>{todo}</li>
-                <button
-                  onClick={() => {
-                    onClickBack(index);
-                  }}
-                >
-                  戻す
-                </button>
-              </div>
-            );
-          })}
-        </ul>
-      </div>
+      {/* 　　　　コンポーネントの呼び出し */}
+      <InputTodo
+        // 必要なpropsを渡す
+        // propsは、「props名=値」という形で、コンポーネントを呼び出す箇所で渡す。
+        todoText={todoText}
+        onChange={onChangeTodoText}
+        onClick={onClickadd}
+      />
+      <InCompleteTodo
+        todos={incompleteTodos}
+        onClickComplete={onClickComplete}
+        onClickDelete={onClickdelete}
+      />
+      <CompleteTodo todos={completeTodos} onClickBack={onClickBack} />
     </>
   );
 };
